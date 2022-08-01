@@ -42,18 +42,18 @@ def last_quote(ticker):
 
 ### --- DataFrame work --- ###
 
-holdings_url = 'https://raw.githubusercontent.com/YellowSkin22/portfolio_app/main/holdings.csv?token=GHSAT0AAAAAABXEPX2VSVW3YNXRRRTHAGWAYXFJGFA' # <- set url for holdings
+holdings_url = 'https://raw.githubusercontent.com/YellowSkin22/portfolio_app/main/data/holdings.csv' # <- set url for holdings
 holdings_df = pd.read_csv(holdings_url) # <- turn csv into dataframe
 holdings_df['last_quote'] = holdings_df.apply(lambda row: last_quote(row['ticker']), axis=1) # <- get last quote by using function
 holdings_df['total'] = holdings_df.holdings * holdings_df.last_quote # <- calculating the total value of the holding
 
-transactions_url = 'https://raw.githubusercontent.com/YellowSkin22/portfolio_app/main/transactions.csv'
+transactions_url = 'https://raw.githubusercontent.com/YellowSkin22/portfolio_app/main/data/transactions.csv'
 transactions_df = pd.read_csv(transactions_url)
 transactions_df.dropna(how='all',
                        axis=1,
                        inplace=True)
 
-other_transactions_url = 'https://raw.githubusercontent.com/YellowSkin22/portfolio_app/main/other_transactions.csv'
+other_transactions_url = 'https://raw.githubusercontent.com/YellowSkin22/portfolio_app/main/data/other_transactions.csv'
 other_transactions_df = pd.read_csv(other_transactions_url)
 
 
@@ -182,7 +182,10 @@ y2 = mortgage_df.current_balance_a
 y3 = mortgage_df.current_balance_b
 
 fig2, ax2 = plt.subplots()  # Create a figure containing a single axes.
-ax2.plot(x, y1);  # Plot some data on the axes.
+ax2.plot(x, y1, label='Full Mortgage')  # Plot some data on the axes.
+ax2.plot(x, y2, label='Part 1')
+ax2.plot(x, y3, label='Part 2')
+
 
 ### --- Streamlit App --- ### 
 
